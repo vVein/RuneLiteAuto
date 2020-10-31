@@ -2,6 +2,7 @@ package net.runelite.client.plugins.autoAgility;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Provides;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Point;
@@ -20,6 +21,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @PluginDescriptor(
         name = "Auto Agility",
@@ -47,6 +49,9 @@ public class AutoAgilityPlugin extends Plugin {
 
     @Inject
     private ItemManager itemManager;
+
+    @Getter
+    public static AtomicBoolean inventoryHidden = new AtomicBoolean();
 
     long runTime;
     long startTime = 0;

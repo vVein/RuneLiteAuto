@@ -9,9 +9,6 @@ import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
-import net.runelite.client.plugins.autoCrafter.AutoCrafterCore;
-import net.runelite.client.plugins.autoCrafter.AutoCrafterPlugin;
-import net.runelite.client.plugins.autoalchemy.AutoalchemyPlugin;
 
 import javax.inject.Inject;
 import java.awt.*;
@@ -438,16 +435,6 @@ public class AutoAgilityCore {
         bankWidgetOpen.set(!client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).isHidden());
     }
 
-    public void craftingWidgetOpenCheck(){
-
-        if (client.getWidget(446, 1) == null) {
-            AutoCrafterPlugin.jewelryCraftingWidgetOpen.set(false);
-            return;
-        }
-
-        AutoCrafterPlugin.jewelryCraftingWidgetOpen.set(!client.getWidget(446, 1).isHidden());
-
-    }
 
     public void openBank() throws InterruptedException, AWTException {
         Robot robot = new Robot();
@@ -456,7 +443,7 @@ public class AutoAgilityCore {
                 if (gameObjectFromTiles(bankObjectList, bankBoothContainerArea)) {
                     moveMouseObject(robot, 0.35, 0.33);
                     if (mouseArrived.get()){
-                        AutoCrafterCore.activeTargetGameObject.set(false);
+                        AutoAgilityCore.activeTargetGameObject.set(false);
                         if( leftClickOption(useBankText)) {
                             leftClick(robot);
                             int randomDelay1 = rand(1000, 2000);
@@ -469,7 +456,7 @@ public class AutoAgilityCore {
                             moveMouseFixedPoint(robot, menuOption, 24, 8, 10, 3);
                             int randomDelay3 = rand(700, 1200);
                             Thread.sleep(randomDelay3);
-                            if (AutoCrafterCore.mouseArrived.get() ) {
+                            if (AutoAgilityCore.mouseArrived.get() ) {
                                 leftClick(robot);
                                 int randomDelay2 = rand(1000, 2000);
                                 Thread.sleep(randomDelay2);
@@ -482,7 +469,7 @@ public class AutoAgilityCore {
             else if(gameObjectFromTiles(bankObjectList, bankBoothContainerArea)){
                 moveMouseObject(robot, 0.35, 0.33);
                 if (mouseArrived.get()){
-                    AutoCrafterCore.activeTargetGameObject.set(false);
+                    AutoAgilityCore.activeTargetGameObject.set(false);
                     if( leftClickOption(useBankText)) {
                         leftClick(robot);
                         int randomDelay1 = rand(1000, 2000);
@@ -495,7 +482,7 @@ public class AutoAgilityCore {
                         moveMouseFixedPoint(robot, menuOption, 24, 8, 10, 3);
                         int randomDelay3 = rand(700, 1200);
                         Thread.sleep(randomDelay3);
-                        if (AutoCrafterCore.mouseArrived.get() ) {
+                        if (AutoAgilityCore.mouseArrived.get() ) {
                             leftClick(robot);
                             int randomDelay2 = rand(1000, 2000);
                             Thread.sleep(randomDelay2);
@@ -635,7 +622,7 @@ public class AutoAgilityCore {
 
     public void openInventory() throws AWTException, InterruptedException {
         Robot robot = new Robot();
-        boolean inventoryHidden = AutoalchemyPlugin.inventoryHidden.get();
+        boolean inventoryHidden = AutoAgilityPlugin.inventoryHidden.get();
         if (inventoryHidden) {
             int randomDelay0 = rand(400, 600);
             Thread.sleep(randomDelay0);
@@ -667,7 +654,7 @@ public class AutoAgilityCore {
             moveMouseWidget(robot, 160, 27);
             int randomDelay3 = rand(700, 1200);
             Thread.sleep(randomDelay3);
-            if (AutoCrafterCore.mouseArrived.get() ) {
+            if (AutoAgilityCore.mouseArrived.get() ) {
                 leftClick(robot);
                 int randomDelay2 = rand(1000, 2000);
                 Thread.sleep(randomDelay2);
