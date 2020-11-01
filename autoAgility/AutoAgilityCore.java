@@ -250,7 +250,7 @@ public class AutoAgilityCore {
         return rand;
     }
 
-    public boolean outsideWindow(Point point) {
+    public boolean outsideStaticWindow(Point point) {
         double pointX = point.getX();
         double pointY = point.getY();
         Rectangle window1 = new Rectangle(5, 7 + canvasOffsetY, (1420 - 3), (841 - 26));
@@ -268,11 +268,77 @@ public class AutoAgilityCore {
         }
     }
 
-    public static boolean outsideEntireWindow(Point point) {
+    public boolean outsideWindow(Point point) {
+        Widget Full_Window_Widget = client.getWidget(164,2);
+        Rectangle Full_Window = new Rectangle(Full_Window_Widget.getCanvasLocation().getX(),Full_Window_Widget.getCanvasLocation().getY(),
+                Full_Window_Widget.getWidth(), Full_Window_Widget.getHeight());
+        Widget Viewport_Widget = client.getWidget(164,6);
+        Rectangle Viewport = new Rectangle(Viewport_Widget.getCanvasLocation().getX(),Viewport_Widget.getCanvasLocation().getY(),
+                Viewport_Widget.getWidth(), Viewport_Widget.getHeight());
+        Widget Chatbox_Widget = client.getWidget(WidgetInfo.CHATBOX_PARENT);
+        Rectangle Chatbox = new Rectangle(Chatbox_Widget.getCanvasLocation().getX(),Chatbox_Widget.getCanvasLocation().getY(),
+                Chatbox_Widget.getWidth(), Chatbox_Widget.getHeight());
+        Widget Minimap_Widget = client.getWidget(164,20);
+        Rectangle Minimap = new Rectangle(Minimap_Widget.getCanvasLocation().getX(),Minimap_Widget.getCanvasLocation().getY(),
+                Minimap_Widget.getWidth(), Minimap_Widget.getHeight());
+        Widget Left_Icons_Widget = client.getWidget(164,52);
+        Rectangle Left_Icons = new Rectangle(Left_Icons_Widget.getCanvasLocation().getX(),Left_Icons_Widget.getCanvasLocation().getY(),
+                Left_Icons_Widget.getWidth(), Left_Icons_Widget.getHeight());
+        Widget Inventory_Widget = client.getWidget(164,67);
+        Rectangle Inventory = new Rectangle(Inventory_Widget.getCanvasLocation().getX(),Inventory_Widget.getCanvasLocation().getY(),
+                Inventory_Widget.getWidth(), Inventory_Widget.getHeight());
+
+        Rectangle Central_Rectangle = new Rectangle(5, 7 + canvasOffsetY,(int)Viewport.getWidth(),
+                (int)Viewport.getHeight()-(7 + canvasOffsetY));
+        Rectangle Right_Rectangle = new Rectangle( (int) Viewport.getWidth(), (int) Minimap.getHeight(),
+                (int) Full_Window.getWidth() - ((int) Viewport.getWidth() + 5),
+                (int) (Inventory.getY() - (Minimap.getHeight() + 5)));
+        Rectangle Bottom_Rectangle = new Rectangle((int)Chatbox.getWidth(),(int)Viewport.getHeight(),
+                (int) Left_Icons.getX() - (int)Chatbox.getWidth(),
+                (int) Full_Window.getHeight() - ( (int) Viewport.getHeight() ));
+        Rectangle Lower_Right_Rectangle = new Rectangle((int)Left_Icons.getX(),(int)Viewport.getHeight(),
+                (int)Viewport.getWidth() - (int)Left_Icons.getX(), (int)Left_Icons.getY() - (int)Viewport.getHeight() );
+
         double pointX = point.getX();
         double pointY = point.getY();
+
+        if (Central_Rectangle.contains(pointX, pointY) || Right_Rectangle.contains(pointX, pointY)
+                || Bottom_Rectangle.contains(pointX, pointY) || Lower_Right_Rectangle.contains(pointX, pointY))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public boolean outsideStaticEntireWindow(Point point) {
+        double pointX = point.getX();
+        double pointY = point.getY();
+
         Rectangle window = new Rectangle(5, 7 , 1630, 1004 - canvasOffsetY);
         if (window.contains(pointX, pointY))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public boolean outsideEntireWindow(Point point) {
+
+        Widget Full_Window_Widget = client.getWidget(164,2);
+        Rectangle Full_Window = new Rectangle(Full_Window_Widget.getCanvasLocation().getX() + 5,
+                Full_Window_Widget.getCanvasLocation().getY() + 7,
+                Full_Window_Widget.getWidth(), Full_Window_Widget.getHeight() - canvasOffsetY);
+
+        double pointX = point.getX();
+        double pointY = point.getY();
+
+        if (Full_Window.contains(pointX, pointY))
         {
             return false;
         }
